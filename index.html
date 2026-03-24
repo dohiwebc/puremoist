@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ピュアモイストセラム | 毛穴も、乾きも、1本で終わる朝。</title>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ivory: #F8F5F0;
+            --black: #1A1714;
+            --gold: #B5935A;
+            --gold-light: #D4B483;
+            --text: #4A4440;
+            --text-light: #8C837A;
+            --border: #E2D9CF;
+            --white: #FDFCFA;
+            --dark: #1C1A17;
+            --accent-bg: #F2EDE6;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Hiragino Mincho ProN', 'Yu Mincho', '游明朝', serif;
+            background: var(--ivory);
+            color: var(--text);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .sans { font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'メイリオ', sans-serif; }
+
+        /* ANIMATIONS */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-d1 { transition-delay: 0.1s; }
+        .reveal-d2 { transition-delay: 0.2s; }
+        .reveal-d3 { transition-delay: 0.3s; }
+        .reveal-d4 { transition-delay: 0.4s; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scrollPulse {
+            0%,100% { opacity: 0.3; }
+            50%      { opacity: 0.9; }
+        }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+        /* LAYOUT */
+        .container        { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+        .container-narrow { max-width: 780px;  margin: 0 auto; padding: 0 40px; }
+
+        /* SECTION LABEL */
+        .label {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.68rem;
+            letter-spacing: 0.32em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .label::after { content: ''; display: block; width: 36px; height: 1px; background: var(--gold); }
+        .label-center { justify-content: center; }
+
+        /* ─── NAVIGATION ─── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 24px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(248,245,240,0.96);
+            backdrop-filter: blur(12px);
+            padding: 14px 40px;
+            box-shadow: 0 1px 0 var(--border);
+        }
+        .nav-logo {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.82rem; font-weight: 600; letter-spacing: 0.3em;
+            color: var(--ivory); text-decoration: none;
+            transition: color 0.4s;
+        }
+        nav.scrolled .nav-logo { color: var(--black); }
+        .nav-cta {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.78rem; font-weight: 500; letter-spacing: 0.15em;
+            color: var(--ivory); text-decoration: none;
+            padding: 9px 26px; border: 1px solid rgba(255,255,255,0.55);
+            transition: all 0.3s;
+        }
+        nav.scrolled .nav-cta { color: var(--black); border-color: var(--black); }
+        nav.scrolled .nav-cta:hover { background: var(--black); color: var(--ivory); }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            background: var(--black);
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 120px 40px 90px;
+            position: relative; overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 68% 28%, rgba(181,147,90,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 18% 82%, rgba(181,147,90,0.07) 0%, transparent 50%);
+        }
+        .hero-product {
+            position: absolute; right: 7%; top: 50%; transform: translateY(-50%);
+            width: 260px; height: 370px; border-radius: 6px; overflow: hidden;
+        }
+        .hero-product img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-bottle-wrap {
+            width: 100%; height: 100%;
+            background: linear-gradient(160deg, #2A2520 0%, #1A1714 60%, #2D2822 100%);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .hero-bottle {
+            width: 74px; height: 130px;
+            background: linear-gradient(135deg, #C9A96E 0%, #8B6914 50%, #C9A96E 100%);
+            border-radius: 37px 37px 28px 28px;
+            position: relative;
+            box-shadow: inset -8px 0 18px rgba(0,0,0,0.35), 0 0 40px rgba(181,147,90,0.28);
+        }
+        .hero-bottle::before {
+            content: '';
+            position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+            width: 22px; height: 22px;
+            background: linear-gradient(135deg, #D4B483 0%, #9A7830 100%);
+            border-radius: 4px 4px 0 0;
+        }
+        .hero-bottle-text {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.38rem; letter-spacing: 0.12em;
+            color: rgba(255,255,255,0.75); text-align: center; line-height: 1.8;
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 560px; }
+        .hero-eyebrow {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.68rem; letter-spacing: 0.35em; color: var(--gold);
+            margin-bottom: 30px;
+            display: flex; align-items: center; gap: 16px;
+            animation: fadeIn 1s ease 0.3s both;
+        }
+        .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
+        .hero h1 {
+            font-size: clamp(2.8rem, 5vw, 4.4rem);
+            font-weight: 300; color: var(--ivory);
+            line-height: 1.25; letter-spacing: 0.03em; margin-bottom: 24px;
+            animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.4s both;
+        }
+        .hero h1 em { font-style: normal; color: var(--gold-light); }
+        .hero-sub {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.95rem; color: rgba(248,245,240,0.55);
+            line-height: 1.9; margin-bottom: 48px;
+            animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.55s both;
+        }
+        .hero-cta {
+            display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+            animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.7s both;
+        }
+        .btn-outline-light {
+            display: inline-block;
+            background: transparent; color: var(--ivory);
+            padding: 17px 48px;
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.88rem; font-weight: 500; letter-spacing: 0.12em;
+            text-decoration: none; border: 1px solid rgba(255,255,255,0.55);
+            transition: background 0.3s, color 0.3s;
+        }
+        .btn-outline-light:hover { background: var(--ivory); color: var(--black); }
+        .hero-note {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.78rem; color: rgba(248,245,240,0.38); letter-spacing: 0.05em;
+        }
+        .hero-scroll {
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 12px;
+            z-index: 1; animation: fadeIn 1s ease 1.2s both;
+        }
+        .hero-scroll span {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.62rem; letter-spacing: 0.28em; color: rgba(248,245,240,0.35);
+        }
+        .scroll-line {
+            width: 1px; height: 48px;
+            background: linear-gradient(to bottom, rgba(181,147,90,0.8), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        /* ─── TICKER ─── */
+        .ticker { background: var(--gold); padding: 18px 0; overflow: hidden; }
+        .ticker-inner {
+            display: flex; gap: 0; white-space: nowrap;
+            animation: marquee 22s linear infinite;
+        }
+        .ticker-group {
+            display: flex; gap: 0; flex-shrink: 0;
+        }
+        .ticker-item {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.72rem; letter-spacing: 0.22em; color: var(--white);
+            padding: 0 40px;
+        }
+        .ticker-item::before { content: '◆  '; }
+
+        /* ─── PROBLEM ─── */
+        .problem { background: var(--dark); padding: 130px 40px; }
+        .problem-headline {
+            font-size: clamp(2rem, 4vw, 3.1rem);
+            font-weight: 300; line-height: 1.45; color: var(--ivory);
+            margin-bottom: 72px; max-width: 680px;
+        }
+        .problem-headline strong { color: var(--gold-light); font-weight: 400; }
+        .problem-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 1px; background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.07);
+            margin-bottom: 60px;
+        }
+        .problem-card {
+            padding: 50px 38px; background: var(--dark);
+            transition: background 0.3s;
+        }
+        .problem-card:hover { background: rgba(255,255,255,0.03); }
+        .p-num {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.62rem; letter-spacing: 0.2em; color: var(--gold);
+            margin-bottom: 22px;
+        }
+        .problem-card h3 {
+            font-size: 1.38rem; font-weight: 400; color: var(--ivory); margin-bottom: 14px;
+        }
+        .problem-card p {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.88rem; color: rgba(248,245,240,0.48); line-height: 1.85;
+        }
+        .problem-note {
+            border-left: 2px solid var(--gold);
+            padding: 28px 36px;
+            background: rgba(181,147,90,0.06);
+        }
+        .problem-note p {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.96rem; color: rgba(248,245,240,0.72); line-height: 2;
+        }
+        .problem-note strong { color: var(--gold-light); }
+
+        /* ─── FEATURES ─── */
+        .features { padding: 140px 40px; background: var(--ivory); }
+        .features-header {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin-bottom: 100px; gap: 40px;
+        }
+        .features-headline {
+            font-size: clamp(2rem, 3.5vw, 2.9rem);
+            font-weight: 300; color: var(--black); line-height: 1.4; max-width: 480px;
+        }
+        .features-desc {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.88rem; color: var(--text-light); line-height: 1.95; max-width: 320px;
+        }
+        .feature-row {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 80px; align-items: center;
+            margin-bottom: 110px; padding-bottom: 110px;
+            border-bottom: 1px solid var(--border);
+        }
+        .feature-row:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .feature-row.rev { direction: rtl; }
+        .feature-row.rev > * { direction: ltr; }
+        .feature-visual {
+            aspect-ratio: 4/5; background: var(--accent-bg);
+            border-radius: 4px; overflow: hidden; position: relative;
+        }
+        .feature-visual img { width: 100%; height: 100%; object-fit: cover; }
+        .feature-placeholder {
+            width: 100%; height: 100%; display: flex;
+            align-items: center; justify-content: center;
+        }
+        .feature-placeholder-icon { font-size: 3rem; opacity: 0.3; }
+        .feature-badge {
+            position: absolute; top: 26px; left: 26px;
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.62rem; letter-spacing: 0.2em; color: var(--gold);
+            background: rgba(248,245,240,0.92); padding: 5px 14px;
+        }
+        .feature-sub {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.68rem; letter-spacing: 0.22em; color: var(--gold);
+            margin-bottom: 14px;
+        }
+        .feature-body h3 {
+            font-size: clamp(1.5rem, 2.4vw, 1.95rem);
+            font-weight: 300; color: var(--black); line-height: 1.45; margin-bottom: 20px;
+        }
+        .feature-rule { width: 28px; height: 1px; background: var(--gold); margin-bottom: 24px; }
+        .feature-body p {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.9rem; color: var(--text-light); line-height: 2;
+        }
+        .usage-box {
+            background: var(--black); color: var(--ivory);
+            padding: 68px 60px; margin-top: 80px;
+            display: flex; align-items: center; justify-content: space-between; gap: 40px;
+        }
+        .usage-text h3 { font-size: 1.55rem; font-weight: 300; margin-bottom: 10px; }
+        .usage-text p {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.88rem; color: rgba(248,245,240,0.55); line-height: 1.8;
+        }
+        .usage-badge {
+            flex-shrink: 0; text-align: center;
+            border: 1px solid var(--gold); padding: 22px 38px;
+        }
+        .usage-badge .big { display: block; font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 3.4rem; font-weight: 200; color: var(--gold-light); line-height: 1; }
+        .usage-badge .unit { display: block; font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.68rem; letter-spacing: 0.14em; color: rgba(248,245,240,0.42); margin-top: 8px; }
+
+        /* ─── SAFETY ─── */
+        .safety { padding: 120px 40px; background: var(--accent-bg); }
+        .safety-head { text-align: center; margin-bottom: 64px; }
+        .safety-head h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 300; color: var(--black); margin-bottom: 14px; }
+        .safety-head p { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.88rem; color: var(--text-light); }
+        .badge-row {
+            display: flex; flex-wrap: nowrap;
+            border: 1px solid var(--border);
+            max-width: 980px; margin: 0 auto;
+        }
+        .badge-cell {
+            flex: 1; padding: 38px 16px; text-align: center;
+            border-right: 1px solid var(--border); background: var(--white);
+            transition: background 0.3s;
+        }
+        .badge-cell:last-child { border-right: none; }
+        .badge-cell:hover { background: var(--ivory); }
+        .badge-icon { font-size: 1.1rem; display: block; margin-bottom: 12px; color: var(--text-light); }
+        .badge-label { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.7rem; font-weight: 600; color: var(--black); display: block; margin-bottom: 6px; }
+        .badge-tag { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.6rem; letter-spacing: 0.12em; color: var(--gold); display: block; }
+        .badge-tag.ok { color: #5a8a6a; }
+
+        /* ─── EXPERT ─── */
+        .expert { padding: 140px 40px; background: var(--ivory); }
+        .expert-inner {
+            max-width: 900px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start;
+        }
+        .expert-profile { position: sticky; top: 100px; }
+        .expert-avatar {
+            width: 100%; aspect-ratio: 3/4;
+            background: linear-gradient(160deg, #E8DFD4 0%, #D4C9BC 100%);
+            border-radius: 4px; margin-bottom: 22px;
+            display: flex; align-items: center; justify-content: center; font-size: 4rem;
+        }
+        .expert-name { font-size: 1.25rem; font-weight: 400; color: var(--black); margin-bottom: 8px; }
+        .expert-title {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.78rem; color: var(--text-light); line-height: 1.7;
+        }
+        .quote-mark {
+            display: block; font-size: 5rem; color: var(--gold); opacity: 0.4;
+            line-height: 0.5; font-family: Georgia, serif; margin-bottom: 32px;
+        }
+        .expert-quote {
+            font-size: 1.1rem; font-weight: 300; color: var(--black); line-height: 2.2;
+            border-left: 2px solid var(--gold); padding-left: 34px;
+        }
+
+        /* ─── REVIEWS ─── */
+        .reviews { padding: 120px 40px; background: var(--dark); }
+        .reviews-headline { text-align: center; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 300; color: var(--ivory); margin-bottom: 64px; }
+        .reviews-grid {
+            display: grid; grid-template-columns: repeat(3,1fr);
+            gap: 1px; background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.06);
+            max-width: 1000px; margin: 0 auto;
+        }
+        .review-card { background: var(--dark); padding: 48px 38px; transition: background 0.3s; }
+        .review-card:hover { background: rgba(255,255,255,0.03); }
+        .review-line { width: 20px; height: 1px; background: var(--gold); margin-bottom: 18px; }
+        .review-stars { font-size: 0.68rem; color: var(--gold); letter-spacing: 0.16em; margin-bottom: 18px; font-family: 'Hiragino Kaku Gothic ProN', sans-serif; }
+        .review-text { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.88rem; color: rgba(248,245,240,0.62); line-height: 1.9; margin-bottom: 24px; }
+        .review-author { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.78rem; color: rgba(248,245,240,0.36); }
+
+        /* ─── PRICING ─── */
+        .pricing { padding: 140px 40px; background: var(--ivory); }
+        .pricing-inner {
+            max-width: 900px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+        }
+        .pricing-left h2 { font-size: clamp(2rem, 3.5vw, 2.7rem); font-weight: 300; color: var(--black); line-height: 1.45; margin-bottom: 22px; }
+        .pricing-left > p { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.9rem; color: var(--text-light); line-height: 1.9; margin-bottom: 36px; }
+        .pricing-perks { list-style: none; margin-bottom: 0; }
+        .pricing-perk {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.88rem; color: var(--text);
+            padding: 13px 0; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; gap: 14px;
+        }
+        .pricing-perk::before { content: ''; width: 16px; height: 1px; background: var(--gold); flex-shrink: 0; }
+        .pricing-panel { background: var(--black); padding: 58px 48px; text-align: center; }
+        .pricing-tag { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.68rem; letter-spacing: 0.28em; color: var(--gold); display: block; margin-bottom: 18px; }
+        .pricing-original { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.88rem; color: rgba(248,245,240,0.3); text-decoration: line-through; margin-bottom: 10px; }
+        .pricing-discount { display: inline-block; border: 1px solid var(--gold); color: var(--gold-light); font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.72rem; letter-spacing: 0.16em; padding: 7px 22px; margin-bottom: 18px; }
+        .pricing-price { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 4rem; font-weight: 200; color: var(--ivory); line-height: 1; margin-bottom: 8px; }
+        .pricing-price span { font-size: 1.4rem; font-weight: 400; }
+        .pricing-tax { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.78rem; color: rgba(248,245,240,0.38); margin-bottom: 32px; }
+        .pricing-btn {
+            display: block; background: var(--gold); color: var(--white);
+            padding: 17px 0;
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.9rem; font-weight: 600; letter-spacing: 0.1em;
+            text-decoration: none; transition: background 0.3s; margin-bottom: 18px;
+        }
+        .pricing-btn:hover { background: var(--gold-light); }
+        .pricing-small { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.72rem; color: rgba(248,245,240,0.28); line-height: 1.8; }
+
+        /* ─── FAQ ─── */
+        .faq { padding: 120px 40px; background: var(--accent-bg); }
+        .faq-head { text-align: center; margin-bottom: 64px; }
+        .faq-head h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 300; color: var(--black); }
+        .faq-list { max-width: 740px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid var(--border); }
+        .faq-question {
+            padding: 26px 0; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center; gap: 20px;
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 1.02rem; color: var(--black); user-select: none;
+            transition: color 0.2s;
+        }
+        .faq-question:hover { color: var(--gold); }
+        .faq-icon {
+            flex-shrink: 0; width: 26px; height: 26px;
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: var(--gold); font-weight: 300;
+            transition: transform 0.3s, background 0.3s, border-color 0.3s;
+        }
+        .faq-item.active .faq-icon { transform: rotate(45deg); background: var(--gold); color: var(--white); border-color: var(--gold); }
+        .faq-answer {
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.9rem; color: var(--text-light); line-height: 1.9;
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+        .faq-item.active .faq-answer { max-height: 300px; padding-bottom: 26px; }
+
+        /* ─── FOOTER CTA ─── */
+        .footer-cta {
+            padding: 160px 40px; background: var(--black); text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .footer-cta::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at center, rgba(181,147,90,0.1) 0%, transparent 68%);
+        }
+        .footer-cta-inner { position: relative; z-index: 1; }
+        .footer-cta h2 { font-size: clamp(1.8rem, 3.5vw, 2.9rem); font-weight: 300; color: var(--ivory); line-height: 1.55; margin-bottom: 18px; }
+        .footer-cta p { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.88rem; color: rgba(248,245,240,0.4); margin-bottom: 48px; }
+        .btn-outline-light-lg {
+            display: inline-block; background: transparent; color: var(--ivory);
+            padding: 18px 56px;
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.9rem; font-weight: 500; letter-spacing: 0.14em;
+            text-decoration: none; border: 1px solid rgba(255,255,255,0.5);
+            transition: background 0.3s, color 0.3s;
+        }
+        .btn-outline-light-lg:hover { background: var(--ivory); color: var(--black); }
+
+        /* ─── FOOTER ─── */
+        footer { background: #100F0C; padding: 80px 40px 110px; }
+        .footer-grid {
+            max-width: 1100px; margin: 0 auto;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 56px;
+        }
+        .footer-logo { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.32em; color: var(--gold); margin-bottom: 18px; }
+        .footer-desc { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.8rem; color: rgba(248,245,240,0.32); line-height: 1.9; margin-bottom: 26px; }
+        .footer-social { display: flex; gap: 10px; }
+        .footer-social a {
+            width: 34px; height: 34px; border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.88rem; color: rgba(248,245,240,0.35); text-decoration: none;
+            transition: all 0.3s;
+        }
+        .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+        .footer-col-title { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; color: rgba(248,245,240,0.55); margin-bottom: 18px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 11px; }
+        .footer-links a { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.8rem; color: rgba(248,245,240,0.32); text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--gold); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.055);
+            padding-top: 32px;
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1100px; margin: 0 auto;
+        }
+        .footer-bottom p { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.72rem; color: rgba(248,245,240,0.22); }
+
+        /* ─── STICKY BAR ─── */
+        .sticky-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(26,23,20,0.96);
+            backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(181,147,90,0.28);
+            padding: 15px 40px;
+            display: flex; align-items: center; justify-content: space-between; gap: 20px;
+            z-index: 200;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .sticky-bar.visible { transform: translateY(0); }
+        .sticky-bar h3 { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--ivory); margin-bottom: 2px; }
+        .sticky-bar p { font-family: 'Hiragino Kaku Gothic ProN', sans-serif; font-size: 0.74rem; color: rgba(248,245,240,0.42); }
+        .sticky-btn {
+            background: var(--gold); color: var(--white);
+            padding: 12px 34px; white-space: nowrap;
+            font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 0.84rem; font-weight: 600; letter-spacing: 0.1em;
+            text-decoration: none; transition: background 0.3s;
+        }
+        .sticky-btn:hover { background: var(--gold-light); }
+
+        /* ─── BACK TO TOP ─── */
+        .back-to-top {
+            position: fixed; bottom: 74px; right: 34px;
+            width: 42px; height: 42px; background: var(--black);
+            border: 1px solid rgba(181,147,90,0.38); color: var(--gold);
+            font-size: 0.9rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s; z-index: 199;
+        }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--gold); color: var(--white); border-color: var(--gold); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 960px) {
+            .problem-grid { grid-template-columns: 1fr; }
+            .features-header { flex-direction: column; align-items: flex-start; }
+            .feature-row { grid-template-columns: 1fr; gap: 40px; }
+            .feature-row.rev { direction: ltr; }
+            .expert-inner { grid-template-columns: 1fr; gap: 40px; }
+            .expert-profile { position: static; display: flex; gap: 24px; align-items: center; }
+            .expert-avatar { width: 90px; aspect-ratio: 1; margin-bottom: 0; flex-shrink: 0; }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .pricing-inner { grid-template-columns: 1fr; gap: 50px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+            .usage-box { flex-direction: column; text-align: center; padding: 50px 30px; }
+        }
+        @media (max-width: 640px) {
+            .container, .container-narrow { padding: 0 20px; }
+            nav { padding: 20px; }
+            nav.scrolled { padding: 12px 20px; }
+            .hero { padding: 100px 20px 80px; }
+            .hero-product { display: none; }
+            .badge-row { flex-wrap: wrap; }
+            .badge-cell { flex: 0 0 calc(100% / 4); border-bottom: 1px solid var(--border); }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+            .sticky-bar { padding: 14px 20px; }
+            .sticky-bar { flex-direction: column; gap: 10px; }
+            .sticky-btn { width: 100%; text-align: center; display: block; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav id="nav">
+    <a href="#" class="nav-logo">PURE MOIST SERUM</a>
+    <a href="#pricing" class="nav-cta">今すぐ試す</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-product">
+        <div class="hero-bottle-wrap">
+            <div class="hero-bottle">
+                <div class="hero-bottle-text">PURE<br>MOIST<br>SERUM</div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-content">
+        <div class="hero-eyebrow">PURE MOIST SERUM</div>
+        <h1>毛穴も、乾きも、<br><em>1本で終わる朝。</em></h1>
+        <p class="hero-sub">忙しい朝でも、たった30秒。<br>毛穴とインナードライを同時ケアする新発想美容液</p>
+        <div class="hero-cta">
+            <a href="#pricing" class="btn-outline-light">初回限定50%OFF ▶ 今すぐ試す</a>
+            <span class="hero-note">30日間返金保証</span>
+        </div>
+    </div>
+    <div class="hero-scroll">
+        <span>SCROLL</span>
+        <div class="scroll-line"></div>
+    </div>
+</section>
+
+<!-- Ticker -->
+<div class="ticker">
+    <div class="ticker-inner">
+        <div class="ticker-group">
+            <span class="ticker-item">パラベンフリー</span>
+            <span class="ticker-item">鉱物油フリー</span>
+            <span class="ticker-item">アルコールフリー</span>
+            <span class="ticker-item">合成着色料フリー</span>
+            <span class="ticker-item">合成香料フリー</span>
+            <span class="ticker-item">紫外線吸収剤フリー</span>
+            <span class="ticker-item">パッチテスト済み</span>
+            <span class="ticker-item">皮膚科医推薦</span>
+        </div>
+        <div class="ticker-group" aria-hidden="true">
+            <span class="ticker-item">パラベンフリー</span>
+            <span class="ticker-item">鉱物油フリー</span>
+            <span class="ticker-item">アルコールフリー</span>
+            <span class="ticker-item">合成着色料フリー</span>
+            <span class="ticker-item">合成香料フリー</span>
+            <span class="ticker-item">紫外線吸収剤フリー</span>
+            <span class="ticker-item">パッチテスト済み</span>
+            <span class="ticker-item">皮膚科医推薦</span>
+        </div>
+    </div>
+</div>
+
+<!-- Problem -->
+<section class="problem reveal">
+    <div class="container">
+        <div class="label" style="color:var(--gold)">THE PROBLEM</div>
+        <h2 class="problem-headline">
+            その肌悩み、<br>実は<strong>「インナードライ」</strong>が<br>原因かもしれません。
+        </h2>
+        <div class="problem-grid">
+            <div class="problem-card reveal reveal-d1">
+                <div class="p-num">01</div>
+                <h3>毛穴の目立ち</h3>
+                <p>朝はマシなのに、午後には毛穴が開いて目立つ…肌内部の乾燥が過剰な皮脂を生み出しています。</p>
+            </div>
+            <div class="problem-card reveal reveal-d2">
+                <div class="p-num">02</div>
+                <h3>テカリなのに乾燥</h3>
+                <p>Tゾーンはテカるのに、頬はカサカサ…これが典型的なインナードライのサイン。</p>
+            </div>
+            <div class="problem-card reveal reveal-d3">
+                <div class="p-num">03</div>
+                <h3>時間がない</h3>
+                <p>忙しくて、何ステップもケアできない…でも手を抜くと肌は確実に悪化していく。</p>
+            </div>
+        </div>
+        <div class="problem-note">
+            <p>肌の内側が乾燥すると、過剰な皮脂で毛穴が目立つ悪循環に。<br><strong>インナードライを根本からケアすることが、すべての解決への近道です。</strong></p>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="features reveal" id="features">
+    <div class="container">
+        <div class="features-header">
+            <div>
+                <div class="label">THE FORMULA</div>
+                <h2 class="features-headline">なぜ、毛穴と乾燥が<br>同時に解決するのか。</h2>
+            </div>
+            <p class="features-desc">3つの主成分が、インナードライの悪循環を根本から断ち切り、毛穴レスな肌へ導きます。</p>
+        </div>
+
+        <div class="feature-row reveal">
+            <div class="feature-visual">
+                <img src="image1.jpg" alt="浸透型ヒアルロン酸" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="feature-placeholder" style="display:none"><div class="feature-placeholder-icon">💧</div></div>
+                <div class="feature-badge">01</div>
+            </div>
+            <div class="feature-body">
+                <div class="feature-sub">HYALURONIC ACID</div>
+                <h3>肌の奥まで届く<br>浸透型ヒアルロン酸</h3>
+                <div class="feature-rule"></div>
+                <p>肌の内側から潤いを満たして、過剰な皮脂分泌を抑制します。深層まで届く特殊なヒアルロン酸が、乾燥の連鎖を断ち切り、インナードライを根本からケアします。</p>
+            </div>
+        </div>
+
+        <div class="feature-row rev reveal">
+            <div class="feature-visual">
+                <img src="image2.jpg" alt="ビタミンC誘導体" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="feature-placeholder" style="display:none"><div class="feature-placeholder-icon">✨</div></div>
+                <div class="feature-badge">02</div>
+            </div>
+            <div class="feature-body">
+                <div class="feature-sub">VITAMIN C DERIVATIVE</div>
+                <h3>毛穴を引き締める<br>ビタミンC誘導体</h3>
+                <div class="feature-rule"></div>
+                <p>透明感のある肌へ導きます。安定型ビタミンC誘導体が肌のキメを整え、毛穴レスな滑らか肌を実現。継続使用で、くすみのない明るい肌へ。</p>
+            </div>
+        </div>
+
+        <div class="feature-row reveal">
+            <div class="feature-visual">
+                <img src="image3.jpg" alt="セラミド" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="feature-placeholder" style="display:none"><div class="feature-placeholder-icon">🌿</div></div>
+                <div class="feature-badge">03</div>
+            </div>
+            <div class="feature-body">
+                <div class="feature-sub">CERAMIDE COMPLEX</div>
+                <h3>バリア機能を守る<br>3種セラミド配合</h3>
+                <div class="feature-rule"></div>
+                <p>敏感肌でも使える優しい処方。3種類のセラミドが肌のバリア機能を強化し、外部刺激から守りながら水分を保持します。1日中しっとりとした肌が続きます。</p>
+            </div>
+        </div>
+
+        <div class="usage-box reveal">
+            <div class="usage-text">
+                <h3>使い方はとてもシンプル</h3>
+                <p>洗顔後、これ1本でOK。複雑なケアは必要ありません。</p>
+            </div>
+            <div class="usage-badge">
+                <span class="big">30</span>
+                <span class="unit">SECONDS / MORNING</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Safety -->
+<section class="safety reveal">
+    <div class="container">
+        <div class="safety-head">
+            <div class="label label-center">FREE FROM</div>
+            <h2>肌に優しい、7つの無添加</h2>
+            <p>敏感肌の方にも安心してお使いいただける処方</p>
+        </div>
+        <div class="badge-row">
+            <div class="badge-cell reveal reveal-d1">
+                <span class="badge-icon">✕</span>
+                <span class="badge-label">パラベン</span>
+                <span class="badge-tag">FREE</span>
+            </div>
+            <div class="badge-cell reveal reveal-d1">
+                <span class="badge-icon">✕</span>
+                <span class="badge-label">鉱物油</span>
+                <span class="badge-tag">FREE</span>
+            </div>
+            <div class="badge-cell reveal reveal-d2">
+                <span class="badge-icon">✕</span>
+                <span class="badge-label">合成着色料</span>
+                <span class="badge-tag">FREE</span>
+            </div>
+            <div class="badge-cell reveal reveal-d2">
+                <span class="badge-icon">✕</span>
+                <span class="badge-label">合成香料</span>
+                <span class="badge-tag">FREE</span>
+            </div>
+            <div class="badge-cell reveal reveal-d3">
+                <span class="badge-icon">✕</span>
+                <span class="badge-label">アルコール</span>
+                <span class="badge-tag">FREE</span>
+            </div>
+            <div class="badge-cell reveal reveal-d3">
+                <span class="badge-icon">✕</span>
+                <span class="badge-label">紫外線吸収剤</span>
+                <span class="badge-tag">FREE</span>
+            </div>
+            <div class="badge-cell reveal reveal-d4">
+                <span class="badge-icon">✓</span>
+                <span class="badge-label">パッチテスト</span>
+                <span class="badge-tag ok">TESTED</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Expert -->
+<section class="expert reveal">
+    <div class="container">
+        <div class="expert-inner">
+            <div class="expert-profile reveal">
+                <div class="expert-avatar">👨‍⚕️</div>
+                <div class="expert-name">山田 太郎 医師</div>
+                <div class="expert-title">皮膚科専門医 / 美容皮膚科医<br>東京スキンクリニック 院長</div>
+            </div>
+            <div class="reveal reveal-d2">
+                <div class="label">DERMATOLOGIST</div>
+                <span class="quote-mark">"</span>
+                <blockquote class="expert-quote">
+                    インナードライは現代人に非常に多い肌悩みです。ピュアモイストセラムは、浸透型ヒアルロン酸とセラミドの組み合わせにより、肌の深層から保湿することで根本的なケアが期待できます。また、ビタミンC誘導体が毛穴の引き締めにもアプローチするため、毛穴とインナードライの両方に悩む方に特におすすめできる処方です。7つの無添加処方で敏感肌の方にも安心してお使いいただけます。
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Reviews -->
+<section class="reviews reveal">
+    <div class="container">
+        <div class="label label-center" style="color:var(--gold)">REVIEWS</div>
+        <h2 class="reviews-headline">お客様の声</h2>
+        <div class="reviews-grid">
+            <div class="review-card reveal reveal-d1">
+                <div class="review-line"></div>
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">朝のスキンケアが本当に楽になりました！これ1本でOKなので、忙しい朝でも続けられます。2週間くらいで毛穴が目立たなくなってきて、夕方のテカリも減った気がします。</p>
+                <div class="review-author">M.K さん（28歳・会社員）</div>
+            </div>
+            <div class="review-card reveal reveal-d2">
+                <div class="review-line"></div>
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">Tゾーンはテカるのに頬は乾燥する…という悩みがずっとありました。使い始めてから、肌全体がしっとりして、テカリも抑えられています。透明感も出た気がして嬉しいです！</p>
+                <div class="review-author">A.T さん（32歳・主婦）</div>
+            </div>
+            <div class="review-card reveal reveal-d3">
+                <div class="review-line"></div>
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">敏感肌なので新しい化粧品は慎重に選ぶのですが、これは刺激がなく使えました！しっかり保湿されるのにベタつかず、朝のメイク前にも最適です。</p>
+                <div class="review-author">R.S さん（26歳・販売職）</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing -->
+<section class="pricing reveal" id="pricing">
+    <div class="container">
+        <div class="pricing-inner">
+            <div class="pricing-left">
+                <div class="label">SPECIAL OFFER</div>
+                <h2>今だけ、<br>試しやすい<br>特別価格で。</h2>
+                <p>合わなかったら全額返金。だから安心してお試しいただけます。</p>
+                <ul class="pricing-perks">
+                    <li class="pricing-perk">送料無料</li>
+                    <li class="pricing-perk">定期縛りなし（1回で解約OK）</li>
+                    <li class="pricing-perk">30日間返金保証付き</li>
+                </ul>
+            </div>
+            <div class="pricing-panel">
+                <span class="pricing-tag">FIRST ORDER</span>
+                <div class="pricing-original">通常価格：6,980円（税込）</div>
+                <div class="pricing-discount">初回限定 50% OFF</div>
+                <div class="pricing-price" id="priceDisplay">3,490<span>円</span></div>
+                <div class="pricing-tax">税込・送料無料</div>
+                <a href="#" class="pricing-btn">今すぐ始める</a>
+                <p class="pricing-small">30日間返金保証 / 定期縛りなし<br>解約はいつでも可能です</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq reveal">
+    <div class="container">
+        <div class="faq-head">
+            <div class="label label-center">FAQ</div>
+            <h2>よくあるご質問</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-question">どのくらいで効果を実感できますか？<span class="faq-icon">+</span></div>
+                <div class="faq-answer">個人差はありますが、多くの方が2週間〜1ヶ月で毛穴の目立ちにくさや肌のしっとり感を実感されています。継続的なご使用をおすすめします。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">敏感肌でも使えますか？<span class="faq-icon">+</span></div>
+                <div class="faq-answer">はい。低刺激処方で、敏感肌の方にもお使いいただけます。パッチテスト済みですが、心配な方は腕の内側などで試してからご使用ください。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">他のスキンケアと併用できますか？<span class="faq-icon">+</span></div>
+                <div class="faq-answer">もちろんです。洗顔後すぐにご使用いただき、その後お好みのクリームなどを重ねていただけます。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">定期購入は必須ですか？<span class="faq-icon">+</span></div>
+                <div class="faq-answer">いいえ。初回のみのご購入も可能です。定期縛りはございませんので、ご安心ください。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">男性でも使えますか？<span class="faq-icon">+</span></div>
+                <div class="faq-answer">はい。性別を問わずお使いいただけます。毛穴やインナードライにお悩みの男性にもおすすめです。</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer CTA -->
+<section class="footer-cta">
+    <div class="footer-cta-inner">
+        <div class="label label-center reveal" style="color:rgba(181,147,90,0.65)">START TODAY</div>
+        <h2 class="reveal">毎日頑張るあなたの肌に、<br>もっとシンプルで、もっと確かなケアを。</h2>
+        <p class="reveal">初回限定50%OFFは今だけ</p>
+        <a href="#pricing" class="btn-outline-light-lg reveal">今すぐ始める ▶</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-grid">
+        <div>
+            <div class="footer-logo">PURE MOIST SERUM</div>
+            <p class="footer-desc">毛穴とインナードライを同時ケアする新発想美容液。忙しい毎日に、たった30秒の贅沢を。</p>
+            <div class="footer-social">
+                <a href="#" aria-label="Instagram">📷</a>
+                <a href="#" aria-label="X">𝕏</a>
+                <a href="#" aria-label="LINE">💬</a>
+            </div>
+        </div>
+        <div>
+            <div class="footer-col-title">商品情報</div>
+            <ul class="footer-links">
+                <li><a href="#features">製品の特徴</a></li>
+                <li><a href="#pricing">価格・購入</a></li>
+                <li><a href="#">成分一覧</a></li>
+                <li><a href="#">使い方ガイド</a></li>
+            </ul>
+        </div>
+        <div>
+            <div class="footer-col-title">サポート</div>
+            <ul class="footer-links">
+                <li><a href="#">よくある質問</a></li>
+                <li><a href="#">配送・返品について</a></li>
+                <li><a href="#">お問い合わせ</a></li>
+                <li><a href="#">返金保証について</a></li>
+            </ul>
+        </div>
+        <div>
+            <div class="footer-col-title">企業情報</div>
+            <ul class="footer-links">
+                <li><a href="#">会社概要</a></li>
+                <li><a href="#">プライバシーポリシー</a></li>
+                <li><a href="#">特定商取引法に基づく表記</a></li>
+                <li><a href="#">利用規約</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>Design by 凪 燈 NAGI AKARI</p>
+        <p>&copy; 2026 Pure Moist Serum. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<!-- Sticky Bar -->
+<div class="sticky-bar" id="stickyBar">
+    <div>
+        <h3>初回限定50%OFF</h3>
+        <p>3,490円（税込・送料無料）</p>
+    </div>
+    <a href="#pricing" class="sticky-btn">今すぐ購入</a>
+</div>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" aria-label="ページトップへ戻る">↑</button>
+
+<script>
+    // Scroll reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.07, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Nav / sticky bar / back-to-top
+    const nav       = document.getElementById('nav');
+    const stickyBar = document.getElementById('stickyBar');
+    const backToTop = document.getElementById('backToTop');
+    const hero      = document.querySelector('.hero');
+
+    window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        nav.classList.toggle('scrolled', y > 50);
+        backToTop.classList.toggle('visible', y > 600);
+        stickyBar.classList.toggle('visible', hero.getBoundingClientRect().bottom < 0);
+    }, { passive: true });
+
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.querySelector('.faq-question').addEventListener('click', () => {
+            const open = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!open) item.classList.add('active');
+        });
+    });
+
+    // Price count-up
+    const priceEl = document.getElementById('priceDisplay');
+    const priceObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            const target = 3490, dur = 1200, t0 = performance.now();
+            const tick = (now) => {
+                const p = Math.min((now - t0) / dur, 1);
+                const v = Math.floor((1 - Math.pow(1 - p, 3)) * target);
+                priceEl.innerHTML = v.toLocaleString() + '<span>円</span>';
+                if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+            priceObs.unobserve(e.target);
+        });
+    }, { threshold: 0.5 });
+    priceObs.observe(priceEl);
+</script>
+</body>
+</html>
